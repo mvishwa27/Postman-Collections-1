@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "90b740a8-8b4e-4af4-993d-026d16592cbb",
+		"name": "JS_Hotel_Project_Signup_Collection_1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST: Signup form data and save (Valid username data)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Autogenerate username data",
+							"",
+							"function increment(variable) {",
+							"    variable++;",
+							"    return variable",
+							"};",
+							"",
+							"let userNameNumber = pm.environment.get(\"userNameNumber\") //100",
+							"pm.environment.set(\"userNameNumber\", increment(userNameNumber)); //101",
+							"",
+							"let n1 = pm.environment.get(\"userName1\") //test",
+							"let n2 = pm.environment.get(\"userName2\") //@gmail.com",
+							"",
+							"pm.test(\"status code should be 200\", function(){",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.test(\"test for Signup form data and save function with valid username data\", function(){",
+							"    pm.expect(jsonData.msg).to.eql(\"Sign Up is successful. Please verify the account in emailID\")",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "userName",
+							"value": "{{userName1}}{{userNameNumber}}{{userName2}}",
+							"description": "email id",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Hotel123!",
+							"type": "text"
+						},
+						{
+							"key": "firstName",
+							"value": "testfirst",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "testlast",
+							"type": "text"
+						},
+						{
+							"key": "phoneNumber",
+							"value": "1234567890",
+							"type": "text"
+						},
+						{
+							"key": "dateOfBirth",
+							"value": "11/11/1911",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:9000/authentication/saveSignInDetails",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"authentication",
+						"saveSignInDetails"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST: Signup form data and save (Invalid username with duplicate data)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"",
+							"pm.test(\"status code should be 200\", function(){",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.test(\"test for Signup form data and save function with invalid and duplicate username data\", function(){",
+							"    pm.expect(jsonData.msg).to.eql(\"Email Id already exists. Please choose another Id.\")",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "userName",
+							"value": "test101@gmail.com",
+							"description": "email id",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Hotel123!",
+							"type": "text"
+						},
+						{
+							"key": "firstName",
+							"value": "testfirst",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "testlast",
+							"type": "text"
+						},
+						{
+							"key": "phoneNumber",
+							"value": "1234567890",
+							"type": "text"
+						},
+						{
+							"key": "dateOfBirth",
+							"value": "11/11/1911",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:9000/authentication/saveSignInDetails",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"authentication",
+						"saveSignInDetails"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
